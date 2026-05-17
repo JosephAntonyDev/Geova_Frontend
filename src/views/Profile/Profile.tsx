@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import { usersViewModel } from '../../viewmodels/UserViewModel';
 import { projectService } from '../../services/ProjectService';
 
+// Demo mode flag
+const IS_DEMO_MODE = true;
+
 function Profile() {
     const [user, setUser] = useState(null);
     const [totalProjects, setTotalProjects] = useState(0);
@@ -17,10 +20,20 @@ function Profile() {
             if (res.success) {
                 setUser(res.data);
                 setFormData(res.data);
-                // Obtener total de proyectos
-                projectService.getTotalProjectsByUser(res.data.Id).then((result) => {
-                    setTotalProjects(result.total_projects || 0);
-                });
+                
+                if (IS_DEMO_MODE) {
+                    // En modo demo, obtener proyectos del localStorage
+                    const storedProjects = localStorage.getItem('demo_projects');
+                    if (storedProjects) {
+                        const projects = JSON.parse(storedProjects);
+                        setTotalProjects(projects.length);
+                    }
+                } else {
+                    // Obtener total de proyectos del servidor
+                    projectService.getTotalProjectsByUser(res.data.Id).then((result) => {
+                        setTotalProjects(result.total_projects || 0);
+                    });
+                }
             } else {
                 console.error('Error al obtener el usuario:', res.error);
             }
@@ -107,6 +120,9 @@ function Profile() {
             <div className='ProfileData'>
                 <div className='ProfilePhoto'>
                     <i className='bx bxs-user-circle'></i>
+                    {IS_DEMO_MODE && (
+                        <div className="demo-badge">Usuario Demo</div>
+                    )}
                 </div>
 
                 <div className='ProfileInfo'>

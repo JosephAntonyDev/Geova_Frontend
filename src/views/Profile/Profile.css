@@ -77,6 +77,22 @@
     color: var(--yellow);
 }
 
+/* Demo badge styles */
+.demo-badge {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%);
+    color: #0a1628;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+    white-space: nowrap;
+}
+
 .ProfileInfo{
     width: 50%;
     background-color: rgb(255, 255, 255);

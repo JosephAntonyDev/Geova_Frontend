@@ -5,6 +5,9 @@ import { projectViewModel } from '../../viewmodels/ProjectViewModel';
 import { projectService } from '../../services/ProjectService';
 import { showCautionAlert } from '../../utils/alerts';
 
+// Demo mode flag
+const IS_DEMO_MODE = true;
+
 function GraphViewer() {
   const { id } = useParams();
   const [dataIMX, setDataIMX] = useState([]);
@@ -196,15 +199,23 @@ function GraphViewer() {
     if (!dataFetched) {
       async function fetchData() {
         setLoading(true);
+        
+        // En modo demo, mostrar mensaje sin intentar conexion
+        if (IS_DEMO_MODE) {
+          setDataFetched(true);
+          setLoading(false);
+          return;
+        }
+        
         try {
-          // Primero verificar si la Raspberry Pi está conectada
+          // Primero verificar si la Raspberry Pi esta conectada
           const isLocalAPIAvailable = await projectService.checkLocalAPIAvailability();
           
           if (!isLocalAPIAvailable) {
-            // Mostrar una sola alerta de que la Raspberry está desconectada
+            // Mostrar una sola alerta de que la Raspberry esta desconectada
             await showCautionAlert(
               'Raspberry Pi desconectada',
-              'No se pueden cargar los datos de sensores porque la Raspberry Pi no está conectada.'
+              'No se pueden cargar los datos de sensores porque la Raspberry Pi no esta conectada.'
             );
             setDataFetched(true);
             setLoading(false);
@@ -471,9 +482,13 @@ function GraphViewer() {
         textAlign: 'center'
       }}>
         <div style={{ fontSize: '48px', marginBottom: '20px' }}></div>
-        <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>No hay mediciones registradas</h3>
+        <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>
+          {IS_DEMO_MODE ? 'Graficas no disponibles en modo demo' : 'No hay mediciones registradas'}
+        </h3>
         <p style={{ margin: '0', color: '#666' }}>
-          Realiza una medición desde el módulo de captura para ver las gráficas aquí.
+          {IS_DEMO_MODE 
+            ? 'Las graficas de sensores requieren conexion con Raspberry Pi y hardware real.'
+            : 'Realiza una medicion desde el modulo de captura para ver las graficas aqui.'}
         </p>
       </div>
     );
