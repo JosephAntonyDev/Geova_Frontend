@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./LoginForm.css";
 import { usersViewModel } from "../../viewmodels/UserViewModel";
 import maquinaImg from "../../assets/Maquina.png";
 import logoImg from "../../assets/Geova_logo.svg";
 import Obligatorio from "../../utils/ui/span-obligatorio";
+import DemoWelcomeModal from "../../demo/DemoWelcomeModal";
 
 interface FormState {
   username: string;
@@ -23,6 +24,7 @@ interface TouchedState {
 
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   const [form, setForm] = useState<FormState>({
     username: "",
@@ -35,6 +37,15 @@ function Login() {
   const [errors, setErrors] = useState<ErrorState>({});
   const [touched, setTouched] = useState<TouchedState>({});
   const [submitted, setSubmitted] = useState(false);
+
+  // Mostrar modal de demo al cargar la pagina (solo la primera vez)
+  useEffect(() => {
+    const hasSeenDemoModal = sessionStorage.getItem('hasSeenDemoModal');
+    if (!hasSeenDemoModal) {
+      setShowDemoModal(true);
+      sessionStorage.setItem('hasSeenDemoModal', 'true');
+    }
+  }, []);
 
   const toggleMode = () => {
     const nextIsLogin = !isLogin;
@@ -86,7 +97,7 @@ function Login() {
 
     if (name === "email" && !isLogin && value) {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!regex.test(value)) error = "Ingresa un correo válido";
+      if (!regex.test(value)) error = "Ingresa un correo valido";
     }
 
     if (name === "password" && value) {
@@ -97,10 +108,10 @@ function Login() {
         if (value.length < 8)
           error = "Debe tener al menos 8 caracteres";
         else if (!/[A-Z]/.test(value))
-          error = "Debe incluir una letra mayúscula";
-        else if (!/[0-9]/.test(value)) error = "Debe incluir un número";
+          error = "Debe incluir una letra mayuscula";
+        else if (!/[0-9]/.test(value)) error = "Debe incluir un numero";
         else if (!/[!@#$%^&*(),.?\":{}|<>]/.test(value))
-          error = "Debe incluir un carácter especial";
+          error = "Debe incluir un caracter especial";
       }
     }
     setErrors((prev) => ({ ...prev, [name]: error }));
@@ -157,9 +168,18 @@ function Login() {
 
   return (
     <div className="Login">
+      {/* Demo Mode Banner */}
+      <div className="demo-banner">
+        <i className="bx bx-info-circle"></i>
+        <span>Modo Demostracion - Ingresa cualquier correo y contrasena para explorar</span>
+        <button className="demo-info-btn" onClick={() => setShowDemoModal(true)}>
+          Mas info
+        </button>
+      </div>
+
       <div className={`LoginContainer ${!isLogin ? "register-machine" : ""}`}>
         <div className={`Machine ${isLogin ? "" : "register-machine"}`}>
-          <img src={maquinaImg} alt="Máquina" />
+          <img src={maquinaImg} alt="Maquina" />
         </div>
         <div className={`FormContainer ${isLogin ? "login-mode" : "register-mode"}`}>
           <div className="Formtitle">
@@ -220,7 +240,7 @@ function Login() {
               </div>
               <input
                 type="text"
-                placeholder="Ingresa tu correo electrónico"
+                placeholder="Ingresa tu correo electronico"
                 name="email"
                 value={form.email}
                 onChange={handleChange}
@@ -229,12 +249,12 @@ function Login() {
             </div>
             <div className="inputform">
               <div className="input-elements">
-                <label>Contraseña</label>
+                <label>Contrasena</label>
                 <Obligatorio show={!!showError("password")} message={errors.password || ""} />
               </div>
               <input
                 type="password"
-                placeholder="Ingresa tu contraseña"
+                placeholder="Ingresa tu contrasena"
                 name="password"
                 value={form.password}
                 onChange={handleChange}
@@ -243,21 +263,27 @@ function Login() {
             </div>
             <div className="buttonform">
               <button className="loginbutton" onClick={handleSubmit}>
-                {isLogin ? "Iniciar sesión" : "Registrarse"}
+                {isLogin ? "Iniciar sesion" : "Registrarse"}
               </button>
               <p>
-                {isLogin ? "¿No tienes una cuenta? " : "¿Ya tienes una cuenta? "}
+                {isLogin ? "No tienes una cuenta? " : "Ya tienes una cuenta? "}
                 <span
                   onClick={toggleMode}
                   style={{ cursor: "pointer", textDecoration: "underline" }}
                 >
-                  {isLogin ? "Regístrate" : "Inicia sesión"}
+                  {isLogin ? "Registrate" : "Inicia sesion"}
                 </span>
               </p>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Demo Welcome Modal */}
+      <DemoWelcomeModal 
+        show={showDemoModal} 
+        onClose={() => setShowDemoModal(false)} 
+      />
     </div>
   );
 }

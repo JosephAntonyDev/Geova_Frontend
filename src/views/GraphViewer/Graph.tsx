@@ -76,6 +76,9 @@ const CircularMetric = React.memo(({ value, label, color, maxValue = 100 }: Circ
   );
 });
 
+// Demo mode flag
+const IS_DEMO_MODE = true;
+
 function GraphViewer() {
   const { id } = useParams();
   const [dataIMX, setDataIMX] = useState<any[]>([]);
@@ -92,12 +95,23 @@ function GraphViewer() {
     if (!dataFetched) {
       async function fetchData() {
         setLoading(true);
+        
+        // En modo demo, mostrar mensaje sin intentar conexion
+        if (IS_DEMO_MODE) {
+          setDataFetched(true);
+          setLoading(false);
+          return;
+        }
+        
         try {
-          const isAvailable = await projectService.checkLocalAPIAvailability();
+          // Primero verificar si la Raspberry Pi esta conectada
+          const isLocalAPIAvailable = await projectService.checkLocalAPIAvailability();
           
-          if (!isAvailable) {
+          if (!isLocalAPIAvailable) {
+            // Mostrar una sola alerta de que la Raspberry esta desconectada
             await showCautionAlert(
-              'Raspberry Pi desconectada'
+              'Raspberry Pi desconectada',
+              'No se pueden cargar los datos de sensores porque la Raspberry Pi no esta conectada.'
             );
             setDataFetched(true);
             setLoading(false);
@@ -469,6 +483,31 @@ function GraphViewer() {
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>⏳</div>
           Cargando datos de sensores...
         </div>
+      </div>
+    );
+  }
+
+  if (!hasData) {
+    return (
+      <div className="GraphContainer" style={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '400px',
+        fontSize: '18px',
+        color: '#666',
+        textAlign: 'center'
+      }}>
+        <div style={{ fontSize: '48px', marginBottom: '20px' }}></div>
+        <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>
+          {IS_DEMO_MODE ? 'Graficas no disponibles en modo demo' : 'No hay mediciones registradas'}
+        </h3>
+        <p style={{ margin: '0', color: '#666' }}>
+          {IS_DEMO_MODE 
+            ? 'Las graficas de sensores requieren conexion con Raspberry Pi y hardware real.'
+            : 'Realiza una medicion desde el modulo de captura para ver las graficas aqui.'}
+        </p>
       </div>
     );
   }

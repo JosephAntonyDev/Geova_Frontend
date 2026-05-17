@@ -37,6 +37,9 @@ function LocationMarkerEdit({ setLat, setLng }) {
   return position ? <Marker position={position} /> : null;
 }
 
+// Demo mode flag
+const IS_DEMO_MODE = true;
+
 function DetallesProyecto() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
@@ -115,6 +118,12 @@ function DetallesProyecto() {
 
     const checkLocalAPI = async () => {
       setCheckingLocalAPI(true);
+      if (IS_DEMO_MODE) {
+        // En modo demo, siempre mostrar como desconectado
+        setIsLocalAPIAvailable(false);
+        setCheckingLocalAPI(false);
+        return;
+      }
       const isAvailable = await projectService.checkLocalAPIAvailability();
       setIsLocalAPIAvailable(isAvailable);
       setCheckingLocalAPI(false);
@@ -235,8 +244,10 @@ function DetallesProyecto() {
         <div className="DetallesEndContainer">
           {/* Indicador de estado de la API local */}
           <div className={`api-status ${checkingLocalAPI ? 'checking' : isLocalAPIAvailable ? 'available' : 'unavailable'}`}>
-            {checkingLocalAPI ? (
-              <span>Verificando conexión...</span>
+            {IS_DEMO_MODE ? (
+              <span>Modo Demo - Sensores no disponibles</span>
+            ) : checkingLocalAPI ? (
+              <span>Verificando conexion...</span>
             ) : isLocalAPIAvailable ? (
               <span>Raspberry Pi conectada</span>
             ) : (
@@ -287,17 +298,12 @@ function DetallesProyecto() {
         <h3 className='SectionTitle'>DESCRIPCIÓN</h3>
         <p>{project?.Descripcion || ''}</p>
 
-        <div className={`ExtraDetails ${hasMeasurements ? 'has-data' : ''}`}>
-            <i className={`bx ${hasMeasurements ? 'bx-bar-chart-alt-2' : 'bx-ruler'}`}></i>
-            <h3>{hasMeasurements ? '¡Ya tienes mediciones registradas!' : 'Este terreno aún no ha sido medido'}</h3>
-            <span>{hasMeasurements ? 'Baja para ver los datos estadísticos de este terreno' : 'Sin datos estadísticos'}</span>
-            <button 
-              onClick={Handlecamera}
-              className={!isLocalAPIAvailable ? 'disabled' : ''}
-              disabled={!isLocalAPIAvailable}
-              title={!isLocalAPIAvailable ? 'Requiere conexión a Raspberry Pi' : hasMeasurements ? 'Crear nueva medición' : 'Comenzar medición'}
-            >
-              <i className={`fa-solid ${hasMeasurements ? 'fa-plus' : 'fa-circle-play'}`}></i> {hasMeasurements ? 'Nueva medición' : 'Comenzar medición'}
+        <div className="ExtraDetails">
+            <i className="bx bx-ruler"></i>
+            <h3>{IS_DEMO_MODE ? 'Medicion no disponible en modo demo' : 'Este terreno aun no ha sido medido'}</h3>
+            <span>{IS_DEMO_MODE ? 'Requiere conexion con Raspberry Pi y sensores' : 'Sin datos estadisticos'}</span>
+            <button onClick={Handlecamera} disabled={IS_DEMO_MODE} className={IS_DEMO_MODE ? 'disabled-demo' : ''}>
+              <i className="fa-solid fa-circle-play"></i> {IS_DEMO_MODE ? 'No disponible en demo' : 'Comenzar medicion'}
             </button>
         </div>
 

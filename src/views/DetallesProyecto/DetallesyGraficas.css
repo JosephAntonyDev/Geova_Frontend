@@ -137,22 +137,17 @@
     transition: 0.3s;
 }
 
-/* Botón deshabilitado en ExtraDetails */
-.ExtraDetails button.disabled {
-    background-color: #D1D5DB;
-    color: #6B7280;
-    cursor: not-allowed;
-    opacity: 0.6;
+/* Demo disabled button styles */
+.ExtraDetails button.disabled-demo {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
-.ExtraDetails button.disabled:hover {
-    background-color: #D1D5DB;
-    color: #6B7280;
-    transform: none;
-}
-
-.ExtraDetails button.disabled i {
-    color: #6B7280;
+.ExtraDetails button.disabled-demo:hover {
+  background-color: #ccc;
+  transform: none;
 }
 
 .ExtraDetails h3, .ExtraDetails span, .ExtraDetails i {
