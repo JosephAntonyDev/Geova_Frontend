@@ -304,7 +304,187 @@
   }
 }
 
-/* Responsive */
+/* Responsive - Laptops y pantallas medianas */
+@media (max-height: 800px) {
+  .demo-modal-content {
+    max-height: 85vh;
+  }
+
+  .demo-modal-header {
+    padding: 20px 24px 16px;
+  }
+
+  .demo-logo {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 8px;
+  }
+
+  .demo-badge {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+
+  .demo-modal-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .demo-modal-header .demo-subtitle {
+    font-size: 0.8rem;
+    margin-top: 4px;
+  }
+
+  .demo-modal-body {
+    padding: 16px 24px;
+  }
+
+  .demo-intro {
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+  }
+
+  .demo-features,
+  .demo-limitations {
+    margin-bottom: 14px;
+    padding: 12px 14px;
+  }
+
+  .demo-features h3,
+  .demo-limitations h3 {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+
+  .demo-features li,
+  .demo-limitations li {
+    font-size: 0.8rem;
+    padding: 5px 0;
+  }
+
+  .demo-note {
+    padding: 10px 12px;
+  }
+
+  .demo-note i {
+    font-size: 1rem;
+  }
+
+  .demo-note p {
+    font-size: 0.75rem;
+  }
+
+  .demo-modal-footer {
+    padding: 14px 24px 20px;
+  }
+
+  .demo-btn-primary {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Laptops con altura muy reducida */
+@media (max-height: 700px) {
+  .demo-modal-content {
+    max-height: 90vh;
+  }
+
+  .demo-modal-header {
+    padding: 16px 20px 12px;
+  }
+
+  .demo-logo {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 6px;
+  }
+
+  .demo-badge {
+    padding: 3px 8px;
+    font-size: 0.65rem;
+    margin-bottom: 6px;
+  }
+
+  .demo-modal-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .demo-modal-header .demo-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .demo-modal-body {
+    padding: 12px 20px;
+  }
+
+  .demo-intro {
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .demo-features,
+  .demo-limitations {
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
+
+  .demo-features h3,
+  .demo-limitations h3 {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    gap: 6px;
+  }
+
+  .demo-features h3 i,
+  .demo-limitations h3 i {
+    font-size: 14px;
+  }
+
+  .demo-features li,
+  .demo-limitations li {
+    font-size: 0.75rem;
+    padding: 4px 0;
+    gap: 8px;
+  }
+
+  .demo-features li i,
+  .demo-limitations li i {
+    font-size: 0.85rem;
+  }
+
+  .demo-note {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .demo-note i {
+    font-size: 0.9rem;
+  }
+
+  .demo-note p {
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+
+  .demo-modal-footer {
+    padding: 12px 20px 16px;
+  }
+
+  .demo-btn-primary {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    border-radius: 10px;
+  }
+
+  .demo-btn-primary i {
+    font-size: 16px;
+  }
+}
+
+/* Responsive - Movil */
 @media (max-width: 540px) {
   .demo-modal-overlay {
     padding: 16px;
