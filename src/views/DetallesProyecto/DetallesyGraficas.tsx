@@ -131,6 +131,13 @@ function DetallesProyecto() {
 
     const checkMeasurements = async () => {
       if (!id) return;
+      
+      // En modo demo, siempre mostrar mediciones simuladas
+      if (IS_DEMO_MODE) {
+        setHasMeasurements(true);
+        return;
+      }
+      
       try {
         // Verificar si hay mediciones (solo una petición para no saturar)
         const imx = await projectViewModel.handleGetSensorIMXByProjectId(id);
@@ -300,10 +307,10 @@ function DetallesProyecto() {
 
         <div className="ExtraDetails">
             <i className="bx bx-ruler"></i>
-            <h3>{IS_DEMO_MODE ? 'Medicion no disponible en modo demo' : 'Este terreno aun no ha sido medido'}</h3>
-            <span>{IS_DEMO_MODE ? 'Requiere conexion con Raspberry Pi y sensores' : 'Sin datos estadisticos'}</span>
+            <h3>{IS_DEMO_MODE ? 'Medicion simulada disponible' : 'Este terreno aun no ha sido medido'}</h3>
+            <span>{IS_DEMO_MODE ? 'Los datos mostrados son simulados para demostracion' : 'Sin datos estadisticos'}</span>
             <button onClick={Handlecamera} disabled={IS_DEMO_MODE} className={IS_DEMO_MODE ? 'disabled-demo' : ''}>
-              <i className="fa-solid fa-circle-play"></i> {IS_DEMO_MODE ? 'No disponible en demo' : 'Comenzar medicion'}
+              <i className="fa-solid fa-circle-play"></i> {IS_DEMO_MODE ? 'Camara no disponible (sin hardware)' : 'Comenzar medicion'}
             </button>
         </div>
 

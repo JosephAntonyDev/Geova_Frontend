@@ -79,6 +79,36 @@ const CircularMetric = React.memo(({ value, label, color, maxValue = 100 }: Circ
 // Demo mode flag
 const IS_DEMO_MODE = true;
 
+// Generar datos simulados para modo demo
+const generateDemoData = (projectId: string | undefined) => {
+  const seed = projectId ? parseInt(projectId) : 1;
+  
+  // Datos simulados para sensor IMX (camara)
+  const demoIMX = Array.from({ length: 4 }, (_, i) => ({
+    calidad_frame: 0.75 + Math.sin(seed + i) * 0.15,
+    luminosidad_promedio: 120 + Math.cos(seed + i * 2) * 40,
+    probabilidad_confiabilidad: 78 + Math.sin(seed + i * 1.5) * 12,
+    nitidez_score: 280 + Math.cos(seed + i) * 80,
+  }));
+  
+  // Datos simulados para sensor TF Luna (distancia)
+  const demoTF = [
+    { distancia_cm: 1250 + seed * 10, temperatura: 24.5, fuerza_senal: 15000 },
+    { distancia_cm: 980 + seed * 8, temperatura: 25.2, fuerza_senal: 14500 },
+    { distancia_cm: 1180 + seed * 12, temperatura: 24.8, fuerza_senal: 15200 },
+    { distancia_cm: 920 + seed * 6, temperatura: 25.0, fuerza_senal: 14800 },
+  ];
+  
+  // Datos simulados para sensor MPU (inclinacion)
+  const demoMPU = Array.from({ length: 6 }, (_, i) => ({
+    roll: 2.5 + Math.sin(seed + i * 0.5) * 3,
+    pitch: 1.8 + Math.cos(seed + i * 0.7) * 2.5,
+    apertura: 45 + Math.sin(seed + i) * 15,
+  }));
+  
+  return { demoIMX, demoTF, demoMPU };
+};
+
 function GraphViewer() {
   const { id } = useParams();
   const [dataIMX, setDataIMX] = useState<any[]>([]);
@@ -86,6 +116,7 @@ function GraphViewer() {
   const [dataMPU, setDataMPU] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [dataFetched, setDataFetched] = useState(false);
+  const [isDemoData, setIsDemoData] = useState(false);
 
   const normalizarLuminosidad = useCallback((lum: number) => Math.min((lum / 255) * 100, 100), []);
   const normalizarNitidez = useCallback((nit: number) => Math.min((nit / 500) * 100, 100), []);
@@ -96,8 +127,13 @@ function GraphViewer() {
       async function fetchData() {
         setLoading(true);
         
-        // En modo demo, mostrar mensaje sin intentar conexion
+        // En modo demo, cargar datos simulados
         if (IS_DEMO_MODE) {
+          const { demoIMX, demoTF, demoMPU } = generateDemoData(id);
+          setDataIMX(demoIMX);
+          setDataTF(demoTF);
+          setDataMPU(demoMPU);
+          setIsDemoData(true);
           setDataFetched(true);
           setLoading(false);
           return;
@@ -501,12 +537,10 @@ function GraphViewer() {
       }}>
         <div style={{ fontSize: '48px', marginBottom: '20px' }}></div>
         <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>
-          {IS_DEMO_MODE ? 'Graficas no disponibles en modo demo' : 'No hay mediciones registradas'}
+          No hay mediciones registradas
         </h3>
         <p style={{ margin: '0', color: '#666' }}>
-          {IS_DEMO_MODE 
-            ? 'Las graficas de sensores requieren conexion con Raspberry Pi y hardware real.'
-            : 'Realiza una medicion desde el modulo de captura para ver las graficas aqui.'}
+          Realiza una medicion desde el modulo de captura para ver las graficas aqui.
         </p>
       </div>
     );
@@ -514,7 +548,15 @@ function GraphViewer() {
 
   return (
     <div className="GraphViewerContainer">
-      {/* Solo mostrar gráficas si hay datos */}
+      {/* Banner de datos simulados en modo demo */}
+      {isDemoData && (
+        <div className="demo-data-banner">
+          <i className="bx bx-info-circle"></i>
+          <span>Datos simulados - En produccion se mostrarian datos reales de los sensores</span>
+        </div>
+      )}
+      
+      {/* Solo mostrar graficas si hay datos */}
       {hasData ? (
         <>
           {/* Sección: Medidas del terreno */}
