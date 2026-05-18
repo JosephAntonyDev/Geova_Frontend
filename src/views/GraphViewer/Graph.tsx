@@ -116,6 +116,7 @@ function GraphViewer() {
   const [dataTF, setDataTF] = useState<any[]>([]);
   const [dataMPU, setDataMPU] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isDemoData, setIsDemoData] = useState(false);
 
   const normalizarLuminosidad = useCallback((lum: number) => Math.min((lum / 255) * 100, 100), []);
   const normalizarNitidez = useCallback((nit: number) => Math.min((nit / 500) * 100, 100), []);
@@ -131,6 +132,7 @@ function GraphViewer() {
         setDataIMX(demoIMX);
         setDataTF(demoTF);
         setDataMPU(demoMPU);
+        setIsDemoData(true);
         setLoading(false);
         return;
       }
