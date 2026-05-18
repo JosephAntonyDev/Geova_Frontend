@@ -23,8 +23,8 @@ const MiniChartPreview = ({ projectId }: { projectId: number }) => {
         <span className="mini-chart-label">Actividad del sensor</span>
         <span className="mini-chart-badge">Demo</span>
       </div>
-      <ResponsiveContainer width="100%" height={80}>
-        <AreaChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+      <ResponsiveContainer width="100%" height={60}>
+        <AreaChart data={data} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
           <defs>
             <linearGradient id={`colorGradient-${projectId}`} x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.4}/>
