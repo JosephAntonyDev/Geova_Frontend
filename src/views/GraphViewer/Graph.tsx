@@ -116,75 +116,60 @@ function GraphViewer() {
   const [dataTF, setDataTF] = useState<any[]>([]);
   const [dataMPU, setDataMPU] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [dataFetched, setDataFetched] = useState(false);
-  const [isDemoData, setIsDemoData] = useState(false);
 
   const normalizarLuminosidad = useCallback((lum: number) => Math.min((lum / 255) * 100, 100), []);
   const normalizarNitidez = useCallback((nit: number) => Math.min((nit / 500) * 100, 100), []);
 
   // Obtener datos
   useEffect(() => {
-    if (!dataFetched) {
-      async function fetchData() {
-        setLoading(true);
+    async function fetchData() {
+      setLoading(true);
+      
+      // En modo demo, cargar datos simulados
+      if (IS_DEMO_MODE) {
+        const { demoIMX, demoTF, demoMPU } = generateDemoData(id);
+        setDataIMX(demoIMX);
+        setDataTF(demoTF);
+        setDataMPU(demoMPU);
+        setLoading(false);
+        return;
+      }
+      
+      try {
+        // Primero verificar si la Raspberry Pi esta conectada
+        const isLocalAPIAvailable = await projectService.checkLocalAPIAvailability();
         
-        // En modo demo, cargar datos simulados
-        if (IS_DEMO_MODE) {
-          const { demoIMX, demoTF, demoMPU } = generateDemoData(id);
-          setDataIMX(demoIMX);
-          setDataTF(demoTF);
-          setDataMPU(demoMPU);
-          setIsDemoData(true);
-          setDataFetched(true);
+        if (!isLocalAPIAvailable) {
+          // Mostrar una sola alerta de que la Raspberry esta desconectada
+          await showCautionAlert(
+            'Raspberry Pi desconectada',
+            'No se pueden cargar los datos de sensores porque la Raspberry Pi no esta conectada.'
+          );
           setLoading(false);
           return;
         }
-        
-        try {
-          // Primero verificar si la Raspberry Pi esta conectada
-          const isLocalAPIAvailable = await projectService.checkLocalAPIAvailability();
-          
-          if (!isLocalAPIAvailable) {
-            // Mostrar una sola alerta de que la Raspberry esta desconectada
-            await showCautionAlert(
-              'Raspberry Pi desconectada',
-              'No se pueden cargar los datos de sensores porque la Raspberry Pi no esta conectada.'
-            );
-            setDataFetched(true);
-            setLoading(false);
-            return;
-          }
 
-          const imx = await projectViewModel.handleGetSensorIMXByProjectId(id);
-          const tf = await projectViewModel.handleGetSensorTFLunaByProjectId(id);
-          const mpu = await projectViewModel.handleGetSensorMPUByProjectId(id);
+        const imx = await projectViewModel.handleGetSensorIMXByProjectId(id);
+        const tf = await projectViewModel.handleGetSensorTFLunaByProjectId(id);
+        const mpu = await projectViewModel.handleGetSensorMPUByProjectId(id);
 
-          if (imx.success && imx.data.length > 0) {
-            setDataIMX(imx.data);
-          }
-          if (tf.success && tf.data.length > 0) {
-            setDataTF(tf.data);
-          }
-          if (mpu.success && mpu.data.length > 0) {
-            setDataMPU(mpu.data);
-          }
-          
-          setDataFetched(true);
-        } catch (error) {
-          console.error('Error obteniendo datos de sensores:', error);
-        } finally {
-          setLoading(false);
+        if (imx.success && imx.data.length > 0) {
+          setDataIMX(imx.data);
         }
+        if (tf.success && tf.data.length > 0) {
+          setDataTF(tf.data);
+        }
+        if (mpu.success && mpu.data.length > 0) {
+          setDataMPU(mpu.data);
+        }
+      } catch (error) {
+        console.error('Error obteniendo datos de sensores:', error);
+      } finally {
+        setLoading(false);
       }
-      fetchData();
     }
-  }, [id, dataFetched]);
-
-  useEffect(() => {
-    setDataFetched(false);
-    setDataIMX([]);
-    setDataTF([]);
-    setDataMPU([]);
+    
+    fetchData();
   }, [id]);
 
   // Nombres de los lados del terreno
