@@ -81,7 +81,8 @@ const IS_DEMO_MODE = true;
 
 // Generar datos simulados para modo demo
 const generateDemoData = (projectId: string | undefined) => {
-  const seed = projectId ? parseInt(projectId) : 1;
+  const parsedId = projectId ? parseInt(projectId) : 1;
+  const seed = isNaN(parsedId) ? 1 : parsedId;
   
   // Datos simulados para sensor IMX (camara)
   const demoIMX = Array.from({ length: 4 }, (_, i) => ({
