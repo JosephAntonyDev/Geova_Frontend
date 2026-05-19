@@ -79,15 +79,15 @@ function DemoWelcomeModal({ show, onClose }: DemoWelcomeModalProps) {
               </li>
               <li>
                 <i className="bx bx-check"></i>
-                <span>Ver el dashboard con proyectos de ejemplo</span>
+                <span>Ver dashboard con graficas de actividad</span>
+              </li>
+              <li>
+                <i className="bx bx-check"></i>
+                <span>Ver graficas de sensores (datos simulados)</span>
               </li>
               <li>
                 <i className="bx bx-check"></i>
                 <span>Explorar detalles y ubicaciones en el mapa</span>
-              </li>
-              <li>
-                <i className="bx bx-check"></i>
-                <span>Editar tu perfil de usuario demo</span>
               </li>
             </ul>
           </div>
@@ -104,15 +104,7 @@ function DemoWelcomeModal({ show, onClose }: DemoWelcomeModalProps) {
               </li>
               <li>
                 <i className="bx bx-x"></i>
-                <span>Medicion de terrenos con sensores</span>
-              </li>
-              <li>
-                <i className="bx bx-x"></i>
-                <span>Graficas de sensores en tiempo real</span>
-              </li>
-              <li>
-                <i className="bx bx-x"></i>
-                <span>Sincronizacion con servidor remoto</span>
+                <span>Iniciar camara para medicion (sin hardware)</span>
               </li>
             </ul>
           </div>

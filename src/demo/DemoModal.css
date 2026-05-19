@@ -14,7 +14,8 @@
   justify-content: center;
   z-index: 9999;
   animation: demoFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 20px;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .demo-modal-overlay.closing {
@@ -23,10 +24,11 @@
 
 .demo-modal-content {
   background: var(--white);
-  border-radius: 24px;
-  max-width: 480px;
+  border-radius: 20px;
+  max-width: 420px;
   width: 100%;
-  max-height: 90vh;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -41,13 +43,14 @@
   animation: demoSlideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Header con el color principal de la app */
+/* Header con el color principal de la app - COMPACTO */
 .demo-modal-header {
   background: var(--dark-blue);
-  padding: 28px 28px 24px;
+  padding: 16px 20px 14px;
   text-align: center;
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .demo-modal-header::before {
@@ -67,59 +70,60 @@
 }
 
 .demo-logo {
-  width: 56px;
-  height: 56px;
-  margin-bottom: 12px;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .demo-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: var(--yellow);
   color: var(--dark-blue);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   box-shadow: 0 4px 12px rgba(244, 164, 25, 0.35);
 }
 
 .demo-badge i {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .demo-modal-header h2 {
   color: var(--white);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .demo-modal-header .demo-subtitle {
   color: var(--white-70);
-  font-size: 0.9rem;
-  margin: 8px 0 0 0;
+  font-size: 0.75rem;
+  margin: 4px 0 0 0;
   font-weight: 400;
 }
 
 /* Body - contenido scrolleable */
 .demo-modal-body {
-  padding: 24px 28px;
+  padding: 14px 18px;
   overflow-y: auto;
   flex: 1;
+  min-height: 0;
 }
 
 .demo-intro {
   color: var(--black-70);
-  font-size: 0.95rem;
-  line-height: 1.65;
-  margin-bottom: 24px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-bottom: 14px;
   text-align: center;
 }
 
@@ -128,29 +132,29 @@
   font-weight: 600;
 }
 
-/* Secciones de features y limitaciones */
+/* Secciones de features y limitaciones - COMPACTAS */
 .demo-features,
 .demo-limitations {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   background: var(--gray);
-  border-radius: 16px;
-  padding: 16px 18px;
+  border-radius: 12px;
+  padding: 10px 12px;
 }
 
 .demo-features h3,
 .demo-limitations h3 {
   color: var(--dark-blue);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .demo-features h3 i,
 .demo-limitations h3 i {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .demo-features h3 i {
@@ -172,11 +176,11 @@
 .demo-limitations li {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 7px 0;
+  gap: 8px;
+  padding: 4px 0;
   color: var(--black-70);
-  font-size: 0.875rem;
-  line-height: 1.4;
+  font-size: 0.75rem;
+  line-height: 1.35;
 }
 
 .demo-features li:last-child,
@@ -186,59 +190,60 @@
 
 .demo-features li i {
   color: #22c55e;
-  font-size: 1rem;
+  font-size: 0.85rem;
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 .demo-limitations li i {
   color: var(--red);
-  font-size: 1rem;
+  font-size: 0.85rem;
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
-/* Nota informativa */
+/* Nota informativa - COMPACTA */
 .demo-note {
   background: var(--soft-yellow);
   border: 1px solid rgba(244, 164, 25, 0.3);
-  border-radius: 12px;
-  padding: 14px 16px;
+  border-radius: 10px;
+  padding: 10px 12px;
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: flex-start;
 }
 
 .demo-note i {
   color: var(--dark-yellow);
-  font-size: 1.25rem;
+  font-size: 1rem;
   flex-shrink: 0;
   margin-top: 1px;
 }
 
 .demo-note p {
   color: var(--black-70);
-  font-size: 0.825rem;
-  line-height: 1.5;
+  font-size: 0.7rem;
+  line-height: 1.4;
   margin: 0;
 }
 
-/* Footer con el boton principal */
+/* Footer con el boton principal - COMPACTO */
 .demo-modal-footer {
-  padding: 20px 28px 28px;
+  padding: 12px 18px 16px;
   display: flex;
   justify-content: center;
   background: var(--white);
   border-top: 1px solid var(--gray);
+  flex-shrink: 0;
 }
 
 .demo-btn-primary {
   background: var(--yellow);
   color: var(--dark-blue);
   border: none;
-  padding: 14px 28px;
-  border-radius: 12px;
-  font-size: 0.95rem;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -246,6 +251,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 100%;
+  justify-content: center;
 }
 
 .demo-btn-primary:hover {
@@ -260,7 +267,7 @@
 }
 
 .demo-btn-primary i {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* Animaciones */
@@ -304,49 +311,49 @@
   }
 }
 
-/* Responsive */
-@media (max-width: 540px) {
-  .demo-modal-overlay {
-    padding: 16px;
-  }
-
+/* Responsive - Pantallas grandes (desktop) */
+@media (min-height: 700px) and (min-width: 540px) {
   .demo-modal-content {
-    max-height: 95vh;
-    border-radius: 20px;
+    max-width: 440px;
   }
 
   .demo-modal-header {
-    padding: 24px 20px 20px;
+    padding: 20px 24px 18px;
   }
 
   .demo-logo {
     width: 48px;
     height: 48px;
+    margin-bottom: 10px;
   }
 
   .demo-badge {
-    font-size: 0.7rem;
     padding: 5px 12px;
+    font-size: 0.7rem;
+    margin-bottom: 10px;
   }
 
   .demo-modal-header h2 {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
   }
 
   .demo-modal-header .demo-subtitle {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    margin-top: 6px;
   }
 
   .demo-modal-body {
-    padding: 20px;
+    padding: 18px 22px;
   }
 
   .demo-intro {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
+    margin-bottom: 18px;
   }
 
   .demo-features,
   .demo-limitations {
+    margin-bottom: 14px;
     padding: 14px 16px;
     border-radius: 14px;
   }
@@ -354,12 +361,13 @@
   .demo-features h3,
   .demo-limitations h3 {
     font-size: 0.85rem;
+    margin-bottom: 10px;
   }
 
   .demo-features li,
   .demo-limitations li {
-    font-size: 0.825rem;
-    padding: 6px 0;
+    font-size: 0.8rem;
+    padding: 5px 0;
   }
 
   .demo-note {
@@ -367,62 +375,204 @@
   }
 
   .demo-note p {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 
   .demo-modal-footer {
-    padding: 16px 20px 24px;
+    padding: 16px 22px 20px;
   }
 
   .demo-btn-primary {
-    width: 100%;
-    justify-content: center;
-    padding: 14px 24px;
+    padding: 14px 28px;
+    font-size: 0.9rem;
   }
 }
 
-/* Pantallas muy pequenas */
+/* Responsive - Movil pequeno */
 @media (max-width: 380px) {
   .demo-modal-overlay {
-    padding: 12px;
+    padding: 8px;
+  }
+
+  .demo-modal-content {
+    border-radius: 16px;
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
   }
 
   .demo-modal-header {
-    padding: 20px 16px 16px;
+    padding: 12px 14px 10px;
   }
 
   .demo-logo {
-    width: 44px;
-    height: 44px;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 6px;
+  }
+
+  .demo-badge {
+    padding: 3px 8px;
+    font-size: 0.6rem;
+    margin-bottom: 6px;
   }
 
   .demo-modal-header h2 {
-    font-size: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .demo-modal-header .demo-subtitle {
+    font-size: 0.65rem;
   }
 
   .demo-modal-body {
-    padding: 16px;
+    padding: 10px 12px;
+  }
+
+  .demo-intro {
+    font-size: 0.72rem;
+    margin-bottom: 10px;
+    line-height: 1.45;
   }
 
   .demo-features,
   .demo-limitations {
-    padding: 12px 14px;
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+
+  .demo-features h3,
+  .demo-limitations h3 {
+    font-size: 0.72rem;
+    margin-bottom: 6px;
+    gap: 5px;
+  }
+
+  .demo-features li,
+  .demo-limitations li {
+    font-size: 0.68rem;
+    padding: 3px 0;
+    gap: 6px;
+  }
+
+  .demo-note {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .demo-note i {
+    font-size: 0.9rem;
+  }
+
+  .demo-note p {
+    font-size: 0.65rem;
+  }
+
+  .demo-modal-footer {
+    padding: 10px 12px 14px;
+  }
+
+  .demo-btn-primary {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Landscape mode en movil - altura muy reducida */
+@media (max-height: 500px) {
+  .demo-modal-overlay {
+    padding: 8px;
+    align-items: flex-start;
+  }
+
+  .demo-modal-content {
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    border-radius: 12px;
+  }
+
+  .demo-modal-header {
+    padding: 10px 14px 8px;
+  }
+
+  .demo-logo {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 4px;
+  }
+
+  .demo-badge {
+    padding: 2px 6px;
+    font-size: 0.55rem;
+    margin-bottom: 4px;
+  }
+
+  .demo-modal-header h2 {
+    font-size: 0.9rem;
+  }
+
+  .demo-modal-header .demo-subtitle {
+    display: none;
+  }
+
+  .demo-modal-body {
+    padding: 8px 12px;
+  }
+
+  .demo-intro {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+
+  .demo-features,
+  .demo-limitations {
+    margin-bottom: 6px;
+    padding: 6px 8px;
+  }
+
+  .demo-features h3,
+  .demo-limitations h3 {
+    font-size: 0.7rem;
+    margin-bottom: 4px;
+  }
+
+  .demo-features li,
+  .demo-limitations li {
+    font-size: 0.65rem;
+    padding: 2px 0;
+  }
+
+  .demo-note {
+    padding: 6px 8px;
+  }
+
+  .demo-note p {
+    font-size: 0.6rem;
+  }
+
+  .demo-modal-footer {
+    padding: 8px 12px 10px;
+  }
+
+  .demo-btn-primary {
+    padding: 8px 16px;
+    font-size: 0.75rem;
   }
 }
 
 /* Scrollbar styling */
 .demo-modal-body::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .demo-modal-body::-webkit-scrollbar-track {
   background: var(--gray);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .demo-modal-body::-webkit-scrollbar-thumb {
   background: rgba(244, 164, 25, 0.4);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .demo-modal-body::-webkit-scrollbar-thumb:hover {
