@@ -1,56 +1,674 @@
-.Charts {
+/* ===== GRAPH VIEWER NUEVO DISEÑO ===== */
+.GraphViewerContainer {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Demo data banner */
+.demo-data-banner {
     display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    border: 1px solid #F59E0B;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+}
+
+.demo-data-banner i {
+    color: #D97706;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.demo-data-banner span {
+    color: #92400E;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Section Header */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 25px 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #E5E7EB;
+}
+
+.section-header:first-of-type {
+    margin-top: 0;
+}
+
+.section-header i {
+    font-size: 24px;
+    color: #031328;
+}
+
+.section-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0;
+    flex: 1;
+}
+
+.ver-datos-link {
+    font-size: 13px;
+    color: #2563EB;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.ver-datos-link:hover {
+    text-decoration: underline;
+}
+
+/* Medidas del terreno */
+.medidas-terreno-container {
+    background: #F9FAFB;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.medidas-content {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.terreno-shape-container {
+    flex-shrink: 0;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.terreno-shape-svg {
+    display: block;
+    border-radius: 8px;
+}
+
+.medidas-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+.medida-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.medida-numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.medida-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #374151;
+    min-width: 70px;
+    margin-right: 8px;
+}
+
+.medida-line {
+    flex: 1;
+    height: 1px;
+    background: repeating-linear-gradient(
+        to right,
+        #9CA3AF 0,
+        #9CA3AF 4px,
+        transparent 4px,
+        transparent 8px
+    );
+    min-width: 40px;
+}
+
+.medida-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1F2937;
+    min-width: 60px;
+    text-align: right;
+}
+
+.area-row {
+    margin-top: 5px;
+    padding-top: 12px;
+    border-top: 1px solid #E5E7EB;
+}
+
+.area-value {
+    color: #F59E0B;
+    font-size: 18px;
+}
+
+/* Helper de instrucciones */
+.medidas-helper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #EFF6FF;
+    border-radius: 8px;
+    border-left: 3px solid #3B82F6;
+}
+
+.medidas-helper i {
+    color: #3B82F6;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.medidas-helper span {
+    font-size: 12px;
+    color: #1E40AF;
+    line-height: 1.4;
+}
+
+/* No data box */
+.no-data-box {
+    background: #F9FAFB;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.no-data-box i {
+    font-size: 48px;
+    color: #9CA3AF;
+    margin-bottom: 15px;
+}
+
+.no-data-box p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #374151;
+    margin: 0 0 5px 0;
+}
+
+.no-data-box span {
+    font-size: 14px;
+    color: #6B7280;
+}
+
+/* Variante cuando hay datos */
+.no-data-box.has-data {
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    border: 1px solid #F59E0B;
+}
+
+.no-data-box.has-data i {
+    color: #F59E0B;
+}
+
+.no-data-box.has-data p {
+    color: #92400E;
+}
+
+.no-data-box.has-data span {
+    color: #B45309;
+}
+
+.comenzar-medicion-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #F59E0B;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.2s ease;
+}
+
+.comenzar-medicion-btn:hover {
+    background: #D97706;
+}
+
+.comenzar-medicion-btn.disabled {
+    background: #D1D5DB;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.comenzar-medicion-btn.disabled:hover {
+    background: #D1D5DB;
+}
+
+/* Camera stats container */
+.camera-stats-container {
+    background: #F9FAFB;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.radar-section h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #374151;
+    margin: 0 0 15px 0;
+}
+
+.radar-chart-wrapper {
+    width: 100%;
+    min-height: 300px;
+}
+
+/* Circular stats */
+.circular-stats-section {
+    display: flex;
+    justify-content: space-around;
     flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #E5E7EB;
+}
+
+.circular-metric-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.circular-chart-small {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+.circular-value-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.circular-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #4B5563;
+}
+
+.color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+/* Line chart section */
+.line-chart-section {
     width: 100%;
 }
-.Charts>div {
-    width: 50%;
+
+.line-chart-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 15px 0;
+    text-align: center;
 }
-.Charts>div:last-child {
-    width: 100%;
+
+.line-chart-wrapper {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+/* MPU Chart container - igual que en TomarFoto */
+.mpu-chart-container {
+    background: #F9FAFB;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.mpu-chart-container h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.mpu-chart-wrapper {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    min-height: 380px;
+}
+
+/* TF Luna Chart container */
+.tf-chart-container {
+    background: #F9FAFB;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.tf-chart-container h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.tf-chart-wrapper {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    min-height: 380px;
+}
+
+/* Inclination values section */
+.inclination-values-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #E5E7EB;
+}
+
+.inclination-values-section h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin: 0 0 15px 0;
+}
+
+.inclination-values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.inclination-value-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: white;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.measurement-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.measurement-label {
+    color: #6B7280;
+}
+
+.measurement-value {
+    font-weight: 600;
+    color: #1F2937;
+    margin-left: auto;
+}
+
+/* Histogram container */
+.histogram-container {
+    background: #F9FAFB;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* No data message */
+.no-data-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: #6B7280;
+}
+
+.no-data-message i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #9CA3AF;
+}
+
+.no-data-message p {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Recharts legend styling */
+.recharts-legend-wrapper {
+    margin-top: 10px !important;
+}
+
+.recharts-legend-item {
+    margin-right: 15px !important;
 }
 
 /* ===== ESTILOS RESPONSIVE ===== */
 @media screen and (max-width: 768px) {
-    .Charts {
-        flex-direction: column;
+    .GraphViewerContainer {
+        padding: 15px 10px;
     }
 
-    .Charts > div {
+    .section-header {
+        flex-wrap: wrap;
+    }
+
+    .section-header h2 {
+        font-size: 16px;
+    }
+
+    .ver-datos-link {
         width: 100%;
+        margin-top: 5px;
+        text-align: right;
     }
 
-    .Charts > div:last-child {
-        width: 100%;
+    .medidas-terreno-container,
+    .camera-stats-container,
+    .histogram-container {
+        padding: 15px;
     }
 
-    /* Recharts responsive */
-    .Charts .recharts-responsive-container {
-        min-height: 250px;
+    .camera-stats-container .radar-chart-wrapper {
+        height: 300px;
+        min-height: 300px;
+        position: relative;
     }
 
-    .Charts .recharts-wrapper {
+    /* Fix para ResponsiveContainer en móvil */
+    .recharts-responsive-container {
         width: 100% !important;
+        min-height: 300px !important;
     }
 
-    /* Títulos de gráficas */
-    .Charts h3 {
+    .recharts-responsive-container > div {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .recharts-wrapper {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+
+    .medidas-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .terreno-shape-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .terreno-shape-svg {
+        max-width: 180px;
+        height: auto;
+    }
+
+    .medidas-box {
+        width: 100%;
+    }
+
+    .medida-label {
         font-size: 14px;
-        text-align: center;
-        margin: 10px 0;
+        min-width: 80px;
     }
 
-    /* Leyendas de Recharts */
-    .Charts .recharts-legend-wrapper {
+    .medida-value {
+        font-size: 14px;
+    }
+
+    .area-value {
+        font-size: 16px;
+    }
+
+    /* Radar chart responsive */
+    .radar-chart-wrapper {
+        min-height: 300px;
+        height: 300px;
+        padding: 10px;
+        position: relative;
+    }
+
+    .radar-section {
+        width: 100%;
+    }
+
+    .radar-section h3 {
+        font-size: 14px;
+    }
+
+    .circular-stats-section {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .circular-chart-small {
+        width: 70px;
+        height: 70px;
+    }
+
+    .circular-value-center {
         font-size: 11px;
     }
 
-    /* Ejes */
-    .Charts .recharts-cartesian-axis-tick-value {
+    .circular-label {
+        font-size: 12px;
+    }
+
+    .inclination-values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .inclination-value-item {
+        font-size: 12px;
+    }
+
+    .no-data-box {
+        padding: 30px 15px;
+    }
+
+    .no-data-box i {
+        font-size: 40px;
+    }
+
+    .no-data-box p {
+        font-size: 14px;
+    }
+
+    .comenzar-medicion-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    /* TF Luna chart responsive */
+    .tf-chart-container {
+        padding: 15px;
+        margin-top: 15px;
+    }
+
+    .tf-chart-container h3 {
+        font-size: 14px;
+    }
+
+    .tf-chart-wrapper {
+        padding: 10px;
+        min-height: 350px;
+        height: 350px;
+        position: relative;
+    }
+
+    /* MPU chart responsive */
+    .mpu-chart-container {
+        padding: 15px;
+    }
+
+    .mpu-chart-container h3 {
+        font-size: 14px;
+    }
+
+    .mpu-chart-wrapper {
+        padding: 10px;
+        min-height: 350px;
+        height: 350px;
+        position: relative;
+    }
+
+    /* Recharts responsive */
+    .recharts-wrapper {
+        width: 100% !important;
+    }
+
+    .recharts-legend-wrapper {
+        font-size: 11px;
+    }
+
+    .recharts-cartesian-axis-tick-value {
         font-size: 10px;
     }
 
-    .Charts .recharts-label {
-        font-size: 10px;
+    .recharts-polar-angle-axis-tick-value {
+        font-size: 11px;
     }
 }

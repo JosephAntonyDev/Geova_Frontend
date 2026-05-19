@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import './DemoModal.css';
+import logoImg from '../assets/Geova_logo.svg';
 
 interface DemoWelcomeModalProps {
   show: boolean;
@@ -8,6 +10,7 @@ interface DemoWelcomeModalProps {
 
 function DemoWelcomeModal({ show, onClose }: DemoWelcomeModalProps) {
   const [isClosing, setIsClosing] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -16,6 +19,11 @@ function DemoWelcomeModal({ show, onClose }: DemoWelcomeModalProps) {
       onClose();
     }, 300);
   };
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   useEffect(() => {
     if (show) {
@@ -28,93 +36,100 @@ function DemoWelcomeModal({ show, onClose }: DemoWelcomeModalProps) {
     };
   }, [show]);
 
-  if (!show) return null;
+  if (!show || !mounted) return null;
 
-  return (
+  const modalContent = (
     <div className={`demo-modal-overlay ${isClosing ? 'closing' : ''}`} onClick={handleClose}>
       <div 
         className={`demo-modal-content ${isClosing ? 'closing' : ''}`} 
         onClick={(e) => e.stopPropagation()}
       >
         <div className="demo-modal-header">
-          <div className="demo-icon">
-            <i className="bx bx-info-circle"></i>
+          <div className="demo-header-content">
+            <img src={logoImg} alt="GEOVA Logo" className="demo-logo" />
+            <div className="demo-badge">
+              <i className="bx bx-code-alt"></i>
+              <span>Modo Demo</span>
+            </div>
+            <h2>Bienvenido a GEOVA</h2>
+            <p className="demo-subtitle">Version de demostracion interactiva</p>
           </div>
-          <h2>Modo Demostracion</h2>
         </div>
 
         <div className="demo-modal-body">
           <p className="demo-intro">
-            Bienvenido a la <strong>version de demostracion</strong> de GEOVA. 
-            Esta version te permite explorar todas las funcionalidades de la aplicacion 
-            sin necesidad de crear una cuenta real.
+            Esta es una <strong>version de prueba</strong> que te permite explorar 
+            todas las funcionalidades de la aplicacion sin necesidad de registrarte 
+            o conectar hardware real.
           </p>
 
           <div className="demo-features">
-            <h3>Que puedes hacer:</h3>
+            <h3>
+              <i className="bx bx-check-circle"></i>
+              Funciones disponibles
+            </h3>
             <ul>
               <li>
-                <i className="bx bx-check-circle"></i>
+                <i className="bx bx-check"></i>
                 <span>Iniciar sesion con cualquier correo y contrasena</span>
               </li>
               <li>
-                <i className="bx bx-check-circle"></i>
-                <span>Crear y editar proyectos (guardados localmente)</span>
+                <i className="bx bx-check"></i>
+                <span>Crear, editar y eliminar proyectos</span>
               </li>
               <li>
-                <i className="bx bx-check-circle"></i>
-                <span>Ver el dashboard con proyectos de ejemplo</span>
+                <i className="bx bx-check"></i>
+                <span>Ver dashboard con graficas de actividad</span>
               </li>
               <li>
-                <i className="bx bx-check-circle"></i>
-                <span>Explorar detalles y ubicaciones de proyectos</span>
+                <i className="bx bx-check"></i>
+                <span>Ver graficas de sensores (datos simulados)</span>
               </li>
               <li>
-                <i className="bx bx-check-circle"></i>
-                <span>Ver y editar tu perfil de usuario demo</span>
+                <i className="bx bx-check"></i>
+                <span>Explorar detalles y ubicaciones en el mapa</span>
               </li>
             </ul>
           </div>
 
           <div className="demo-limitations">
-            <h3>Funciones limitadas:</h3>
+            <h3>
+              <i className="bx bx-x-circle"></i>
+              No disponible en demo
+            </h3>
             <ul>
               <li>
-                <i className="bx bx-x-circle"></i>
+                <i className="bx bx-x"></i>
                 <span>Conexion con Raspberry Pi (requiere hardware)</span>
               </li>
               <li>
-                <i className="bx bx-x-circle"></i>
-                <span>Medicion de terrenos con sensores</span>
-              </li>
-              <li>
-                <i className="bx bx-x-circle"></i>
-                <span>Graficas de sensores en tiempo real</span>
-              </li>
-              <li>
-                <i className="bx bx-x-circle"></i>
-                <span>Sincronizacion con servidor remoto</span>
+                <i className="bx bx-x"></i>
+                <span>Iniciar camara para medicion (sin hardware)</span>
               </li>
             </ul>
           </div>
 
           <div className="demo-note">
-            <i className="bx bx-bulb"></i>
+            <i className="bx bx-info-circle"></i>
             <p>
-              Los datos se guardan en tu navegador. Al cerrar o limpiar el navegador, 
-              los proyectos creados se reiniciaran a los ejemplos predeterminados.
+              Los datos se guardan localmente en tu navegador. Al limpiar los datos 
+              del navegador, los proyectos se reiniciaran a los ejemplos predeterminados.
             </p>
           </div>
         </div>
 
         <div className="demo-modal-footer">
           <button className="demo-btn-primary" onClick={handleClose}>
-            Entendido, comenzar a explorar
+            <span>Comenzar a explorar</span>
+            <i className="bx bx-right-arrow-alt"></i>
           </button>
         </div>
       </div>
     </div>
   );
+
+  // Renderizar en el body para evitar el filtro invert del Login
+  return createPortal(modalContent, document.body);
 }
 
 export default DemoWelcomeModal;

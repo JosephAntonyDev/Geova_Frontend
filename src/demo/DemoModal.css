@@ -1,98 +1,168 @@
+/* Demo Modal - Estilos consistentes con la paleta de GEOVA */
+
 .demo-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
+  background: var(--black-70);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  animation: fadeIn 0.3s ease;
-  padding: 20px;
+  animation: demoFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .demo-modal-overlay.closing {
-  animation: fadeOut 0.3s ease forwards;
+  animation: demoFadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .demo-modal-content {
-  background: linear-gradient(145deg, #0a1628 0%, #0d2137 100%);
+  background: var(--white);
   border-radius: 20px;
-  max-width: 520px;
+  max-width: 420px;
   width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 165, 0, 0.2);
-  animation: slideUp 0.3s ease;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.25),
+    0 10px 20px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(244, 164, 25, 0.15);
+  animation: demoSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .demo-modal-content.closing {
-  animation: slideDown 0.3s ease forwards;
+  animation: demoSlideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+/* Header con el color principal de la app - COMPACTO */
 .demo-modal-header {
-  padding: 30px 30px 20px;
+  background: var(--dark-blue);
+  padding: 16px 20px 14px;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 165, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.demo-icon {
-  width: 70px;
-  height: 70px;
-  background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%);
-  border-radius: 50%;
-  display: flex;
+.demo-modal-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(244, 164, 25, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.demo-header-content {
+  position: relative;
+  z-index: 1;
+}
+
+.demo-logo {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.demo-badge {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  margin: 0 auto 15px;
-  box-shadow: 0 8px 25px rgba(255, 165, 0, 0.3);
+  gap: 5px;
+  background: var(--yellow);
+  color: var(--dark-blue);
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(244, 164, 25, 0.35);
 }
 
-.demo-icon i {
-  font-size: 36px;
-  color: #0a1628;
+.demo-badge i {
+  font-size: 12px;
 }
 
 .demo-modal-header h2 {
-  color: #ffffff;
-  font-size: 1.6rem;
-  font-weight: 600;
+  color: var(--white);
+  font-size: 1.2rem;
+  font-weight: 700;
   margin: 0;
+  line-height: 1.2;
 }
 
+.demo-modal-header .demo-subtitle {
+  color: var(--white-70);
+  font-size: 0.75rem;
+  margin: 4px 0 0 0;
+  font-weight: 400;
+}
+
+/* Body - contenido scrolleable */
 .demo-modal-body {
-  padding: 25px 30px;
+  padding: 14px 18px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .demo-intro {
-  color: #b8c5d6;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 25px;
+  color: var(--black-70);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-bottom: 14px;
   text-align: center;
 }
 
 .demo-intro strong {
-  color: #ffa500;
+  color: var(--dark-blue);
+  font-weight: 600;
 }
 
+/* Secciones de features y limitaciones - COMPACTAS */
 .demo-features,
 .demo-limitations {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+  background: var(--gray);
+  border-radius: 12px;
+  padding: 10px 12px;
 }
 
 .demo-features h3,
 .demo-limitations h3 {
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 12px;
+  color: var(--dark-blue);
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+}
+
+.demo-features h3 i,
+.demo-limitations h3 i {
+  font-size: 14px;
+}
+
+.demo-features h3 i {
+  color: #22c55e;
+}
+
+.demo-limitations h3 i {
+  color: var(--red);
 }
 
 .demo-features ul,
@@ -106,78 +176,102 @@
 .demo-limitations li {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 8px 0;
-  color: #b8c5d6;
-  font-size: 0.9rem;
+  gap: 8px;
+  padding: 4px 0;
+  color: var(--black-70);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.demo-features li:last-child,
+.demo-limitations li:last-child {
+  padding-bottom: 0;
 }
 
 .demo-features li i {
-  color: #4ade80;
-  font-size: 1.1rem;
+  color: #22c55e;
+  font-size: 0.85rem;
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 .demo-limitations li i {
-  color: #f87171;
-  font-size: 1.1rem;
+  color: var(--red);
+  font-size: 0.85rem;
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
+/* Nota informativa - COMPACTA */
 .demo-note {
-  background: rgba(255, 165, 0, 0.1);
-  border: 1px solid rgba(255, 165, 0, 0.2);
-  border-radius: 12px;
-  padding: 15px;
+  background: var(--soft-yellow);
+  border: 1px solid rgba(244, 164, 25, 0.3);
+  border-radius: 10px;
+  padding: 10px 12px;
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: flex-start;
 }
 
 .demo-note i {
-  color: #ffa500;
-  font-size: 1.3rem;
+  color: var(--dark-yellow);
+  font-size: 1rem;
   flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .demo-note p {
-  color: #b8c5d6;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  color: var(--black-70);
+  font-size: 0.7rem;
+  line-height: 1.4;
   margin: 0;
 }
 
+/* Footer con el boton principal - COMPACTO */
 .demo-modal-footer {
-  padding: 20px 30px 30px;
+  padding: 12px 18px 16px;
   display: flex;
   justify-content: center;
+  background: var(--white);
+  border-top: 1px solid var(--gray);
+  flex-shrink: 0;
 }
 
 .demo-btn-primary {
-  background: linear-gradient(135deg, #ffa500 0%, #ff8c00 100%);
-  color: #0a1628;
+  background: var(--yellow);
+  color: var(--dark-blue);
   border: none;
-  padding: 14px 32px;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(244, 164, 25, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
 }
 
 .demo-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(255, 165, 0, 0.4);
+  box-shadow: 0 8px 24px rgba(244, 164, 25, 0.45);
+  background: #e69715;
 }
 
 .demo-btn-primary:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(244, 164, 25, 0.3);
 }
 
-@keyframes fadeIn {
+.demo-btn-primary i {
+  font-size: 16px;
+}
+
+/* Animaciones */
+@keyframes demoFadeIn {
   from {
     opacity: 0;
   }
@@ -186,7 +280,7 @@
   }
 }
 
-@keyframes fadeOut {
+@keyframes demoFadeOut {
   from {
     opacity: 1;
   }
@@ -195,10 +289,10 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes demoSlideUp {
   from {
     opacity: 0;
-    transform: translateY(30px) scale(0.95);
+    transform: translateY(40px) scale(0.95);
   }
   to {
     opacity: 1;
@@ -206,7 +300,7 @@
   }
 }
 
-@keyframes slideDown {
+@keyframes demoSlideDown {
   from {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -217,67 +311,270 @@
   }
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+/* Responsive - Pantallas grandes (desktop) */
+@media (min-height: 700px) and (min-width: 540px) {
   .demo-modal-content {
-    max-height: 95vh;
+    max-width: 440px;
   }
 
   .demo-modal-header {
-    padding: 25px 20px 15px;
+    padding: 20px 24px 18px;
   }
 
-  .demo-icon {
-    width: 60px;
-    height: 60px;
+  .demo-logo {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
   }
 
-  .demo-icon i {
-    font-size: 30px;
+  .demo-badge {
+    padding: 5px 12px;
+    font-size: 0.7rem;
+    margin-bottom: 10px;
   }
 
   .demo-modal-header h2 {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
+  }
+
+  .demo-modal-header .demo-subtitle {
+    font-size: 0.8rem;
+    margin-top: 6px;
   }
 
   .demo-modal-body {
-    padding: 20px;
+    padding: 18px 22px;
   }
 
   .demo-intro {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
+    margin-bottom: 18px;
+  }
+
+  .demo-features,
+  .demo-limitations {
+    margin-bottom: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
+  }
+
+  .demo-features h3,
+  .demo-limitations h3 {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
   }
 
   .demo-features li,
   .demo-limitations li {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    padding: 5px 0;
+  }
+
+  .demo-note {
+    padding: 12px 14px;
+  }
+
+  .demo-note p {
+    font-size: 0.75rem;
   }
 
   .demo-modal-footer {
-    padding: 15px 20px 25px;
+    padding: 16px 22px 20px;
   }
 
   .demo-btn-primary {
-    width: 100%;
-    padding: 12px 24px;
+    padding: 14px 28px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Responsive - Movil pequeno */
+@media (max-width: 380px) {
+  .demo-modal-overlay {
+    padding: 8px;
+  }
+
+  .demo-modal-content {
+    border-radius: 16px;
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+
+  .demo-modal-header {
+    padding: 12px 14px 10px;
+  }
+
+  .demo-logo {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 6px;
+  }
+
+  .demo-badge {
+    padding: 3px 8px;
+    font-size: 0.6rem;
+    margin-bottom: 6px;
+  }
+
+  .demo-modal-header h2 {
+    font-size: 1rem;
+  }
+
+  .demo-modal-header .demo-subtitle {
+    font-size: 0.65rem;
+  }
+
+  .demo-modal-body {
+    padding: 10px 12px;
+  }
+
+  .demo-intro {
+    font-size: 0.72rem;
+    margin-bottom: 10px;
+    line-height: 1.45;
+  }
+
+  .demo-features,
+  .demo-limitations {
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+
+  .demo-features h3,
+  .demo-limitations h3 {
+    font-size: 0.72rem;
+    margin-bottom: 6px;
+    gap: 5px;
+  }
+
+  .demo-features li,
+  .demo-limitations li {
+    font-size: 0.68rem;
+    padding: 3px 0;
+    gap: 6px;
+  }
+
+  .demo-note {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .demo-note i {
+    font-size: 0.9rem;
+  }
+
+  .demo-note p {
+    font-size: 0.65rem;
+  }
+
+  .demo-modal-footer {
+    padding: 10px 12px 14px;
+  }
+
+  .demo-btn-primary {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Landscape mode en movil - altura muy reducida */
+@media (max-height: 500px) {
+  .demo-modal-overlay {
+    padding: 8px;
+    align-items: flex-start;
+  }
+
+  .demo-modal-content {
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    border-radius: 12px;
+  }
+
+  .demo-modal-header {
+    padding: 10px 14px 8px;
+  }
+
+  .demo-logo {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 4px;
+  }
+
+  .demo-badge {
+    padding: 2px 6px;
+    font-size: 0.55rem;
+    margin-bottom: 4px;
+  }
+
+  .demo-modal-header h2 {
+    font-size: 0.9rem;
+  }
+
+  .demo-modal-header .demo-subtitle {
+    display: none;
+  }
+
+  .demo-modal-body {
+    padding: 8px 12px;
+  }
+
+  .demo-intro {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+
+  .demo-features,
+  .demo-limitations {
+    margin-bottom: 6px;
+    padding: 6px 8px;
+  }
+
+  .demo-features h3,
+  .demo-limitations h3 {
+    font-size: 0.7rem;
+    margin-bottom: 4px;
+  }
+
+  .demo-features li,
+  .demo-limitations li {
+    font-size: 0.65rem;
+    padding: 2px 0;
+  }
+
+  .demo-note {
+    padding: 6px 8px;
+  }
+
+  .demo-note p {
+    font-size: 0.6rem;
+  }
+
+  .demo-modal-footer {
+    padding: 8px 12px 10px;
+  }
+
+  .demo-btn-primary {
+    padding: 8px 16px;
+    font-size: 0.75rem;
   }
 }
 
 /* Scrollbar styling */
-.demo-modal-content::-webkit-scrollbar {
-  width: 6px;
+.demo-modal-body::-webkit-scrollbar {
+  width: 4px;
 }
 
-.demo-modal-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 3px;
+.demo-modal-body::-webkit-scrollbar-track {
+  background: var(--gray);
+  border-radius: 2px;
 }
 
-.demo-modal-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 165, 0, 0.3);
-  border-radius: 3px;
+.demo-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(244, 164, 25, 0.4);
+  border-radius: 2px;
 }
 
-.demo-modal-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 165, 0, 0.5);
+.demo-modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 164, 25, 0.6);
 }

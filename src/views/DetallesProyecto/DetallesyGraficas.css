@@ -155,6 +155,24 @@
   margin: 0%;
 }
 
+/* ExtraDetails cuando hay mediciones */
+.ExtraDetails.has-data {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  border-color: #F59E0B;
+}
+
+.ExtraDetails.has-data i.bx {
+  color: #F59E0B;
+}
+
+.ExtraDetails.has-data h3 {
+  color: #92400E;
+}
+
+.ExtraDetails.has-data span {
+  color: #B45309;
+}
+
 .ExtraDetails i {
   font-size: 48px;
 }

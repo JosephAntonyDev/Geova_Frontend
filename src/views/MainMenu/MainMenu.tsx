@@ -1,8 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { projectViewModel } from '../../viewmodels/ProjectViewModel';
 import './MainMenu.css';
 import { useNavigate } from 'react-router-dom';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+
+// Generar datos simulados de sensores para preview
+const generateMockSensorData = (projectId: number) => {
+  const seed = projectId * 17;
+  return Array.from({ length: 7 }, (_, i) => ({
+    dia: ['L', 'M', 'X', 'J', 'V', 'S', 'D'][i],
+    valor: 20 + Math.sin(seed + i * 0.8) * 15 + Math.random() * 10,
+  }));
+};
+
+// Mini grafica para preview en tarjetas
+const MiniChartPreview = ({ projectId }: { projectId: number }) => {
+  const data = useMemo(() => generateMockSensorData(projectId), [projectId]);
+  
+  return (
+    <div className="mini-chart-preview">
+      <div className="mini-chart-header">
+        <span className="mini-chart-label">Actividad</span>
+        <span className="mini-chart-badge">Demo</span>
+      </div>
+      <ResponsiveContainer width="100%" height={45}>
+        <AreaChart data={data} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
+          <defs>
+            <linearGradient id={`colorGradient-${projectId}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.4}/>
+              <stop offset="95%" stopColor="#F59E0B" stopOpacity={0.05}/>
+            </linearGradient>
+          </defs>
+          <Area 
+            type="monotone" 
+            dataKey="valor" 
+            stroke="#F59E0B" 
+            strokeWidth={1.5}
+            fill={`url(#colorGradient-${projectId})`}
+            dot={false}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
 
 function MainMenu() {
   const [projects, setProjects] = useState([]);
@@ -193,8 +234,11 @@ function MainMenu() {
                 </div>
                 <div className='MenuProjectData'>
                   <h3>{project.NombreProyecto}</h3>
-                  <p><strong>Fecha de creación:</strong> {formatDate(project.Fecha)}</p>
-                  <p><strong>Categoría:</strong> {project.Categoria}</p>
+                  <p><strong>Categoria:</strong> {project.Categoria}</p>
+                  <p><strong>Fecha de creacion:</strong> {formatDate(project.Fecha)}</p>
+                </div>
+                <div className='MenuProjectChart'>
+                  <MiniChartPreview projectId={project.Id} />
                 </div>
               </div>
             </div>
